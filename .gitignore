@@ -25,6 +25,17 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.idea/
+yatube/.idea/
+*base_tt.py
+yatube/posts/test.py
+sent_emails/*
+yatube/static/
+*.bak
+yatube/db.sqlite*
+yatube/db.sqlite3*
+.gitignore
+
 MANIFEST
 
 # PyInstaller
@@ -32,6 +43,7 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+
 
 # Installer logs
 pip-log.txt
@@ -127,26 +139,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Папки, создаваемые средой разработки
-.idea
-.DS_Store
-.AppleDouble
-.LSOverride
-
-*.sublime-project
-*.sublime-workspace
-
-.vscode/
-*.code-workspace
-
-# Local History for Visual Studio Code
-.history/
-
-.mypy_cache
-
-# папки со статикой и медиа
-static/
-yatube/posts/static/
-yatube/media/
-
+/yatube/media/
+/venv2/
