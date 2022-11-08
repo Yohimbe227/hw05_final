@@ -246,10 +246,12 @@ class PaginatorTests(TestCase):
     def test_paginator(self):
         for page, args in self.page_reverse:
             with self.subTest(page=page):
+                cache.clear()
                 response_first = self.anon.get(reverse(page, args=args))
                 response_second = self.anon.get(
                     reverse(page, args=args) + '?page=2'
                 )
+                cache.clear()
                 self.assertEqual(
                     len(response_first.context['page_obj']),
                     self.posts_per_page,
