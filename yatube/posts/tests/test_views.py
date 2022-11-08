@@ -218,7 +218,9 @@ class PaginatorTests(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.posts_per_page = settings.OBJECTS_PER_PAGE
-        cls.posts_on_second_page = NUMBER_OF_OBJECT_PAGINATOR - settings.OBJECTS_PER_PAGE
+        cls.posts_on_second_page = (
+            NUMBER_OF_OBJECT_PAGINATOR - settings.OBJECTS_PER_PAGE
+        )
         cls.user = mixer.blend(User)
         cls.anon = Client()
         cls.group = mixer.blend(Group)
@@ -228,8 +230,11 @@ class PaginatorTests(TestCase):
             group=cls.group,
         )
         cls.page_reverse = (
-            ('posts:index', None, ),
-            ('posts:group_list', (cls.posts[0].group.slug, )),
+            (
+                'posts:index',
+                None,
+            ),
+            ('posts:group_list', (cls.posts[0].group.slug,)),
             ('posts:profile', (cls.posts[0].author.username,)),
         )
 
@@ -242,7 +247,9 @@ class PaginatorTests(TestCase):
         for page, args in self.page_reverse:
             with self.subTest(page=page):
                 response_first = self.anon.get(reverse(page, args=args))
-                response_second = self.anon.get(reverse(page, args=args) + '?page=2')
+                response_second = self.anon.get(
+                    reverse(page, args=args) + '?page=2'
+                )
                 self.assertEqual(
                     len(response_first.context['page_obj']),
                     self.posts_per_page,

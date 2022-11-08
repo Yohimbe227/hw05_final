@@ -134,4 +134,3 @@ def profile_unfollow(request: HttpRequest, username: str) -> HttpResponse:
     if follows.exists():
         follows.delete()
     return redirect('posts:profile', author)
-
