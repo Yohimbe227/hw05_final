@@ -8,6 +8,8 @@ from posts.apps import PostsConfig
 from users.apps import UsersConfig
 
 handler404 = 'core.views.page_not_found'
+handler500 = 'demo.views.error_500'
+handler403 = 'core.views.server_error'
 
 urlpatterns = [
     path('about/', include('about.urls', namespace=AboutConfig.name)),
