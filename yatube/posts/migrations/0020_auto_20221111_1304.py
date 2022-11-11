@@ -17,16 +17,24 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='comment',
             name='text',
-            field=models.TextField(help_text='Введите текст комментария', verbose_name='текст комментария'),
+            field=models.TextField(
+                help_text='Введите текст комментария',
+                verbose_name='текст комментария',
+            ),
         ),
         migrations.AlterField(
             model_name='post',
             name='image',
-            field=models.ImageField(blank=True, upload_to='posts/', verbose_name='картинка'),
+            field=models.ImageField(
+                blank=True, upload_to='posts/', verbose_name='картинка'
+            ),
         ),
         migrations.AlterField(
             model_name='post',
             name='text',
-            field=models.TextField(help_text='Введите текст комментария', verbose_name='текст комментария'),
+            field=models.TextField(
+                help_text='Введите текст комментария',
+                verbose_name='текст комментария',
+            ),
         ),
     ]
