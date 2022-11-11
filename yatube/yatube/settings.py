@@ -25,10 +25,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+    'sorl.thumbnail',
     'about.apps.AboutConfig',
     'core.apps.CoreConfig',
     'posts.apps.PostsConfig',
-    'sorl.thumbnail',
     'users.apps.UsersConfig',
 ]
 
@@ -120,5 +120,5 @@ LETTERS_IN_TITLE = 15
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
+    },
 }

@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='post',
             options={
                 'default_related_name': 'posts',
-                'ordering': ('-created',),
+                'ordering': ('-pub_date',),
                 'verbose_name': 'пост',
             },
         ),

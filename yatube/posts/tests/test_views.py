@@ -151,7 +151,6 @@ class PostPagesTests(TestCase):
             author=self.users[0],
             group=self.groups[0],
         )
-        cache.clear()
         response_profile = self.anon.get(
             reverse('posts:profile', args=(post.author.username,)),
         )
@@ -160,8 +159,12 @@ class PostPagesTests(TestCase):
         )
         response_index = self.anon.get(reverse('posts:index'))
         response_detail = self.anon.get(
-            reverse('posts:post_detail', args=(post.pk,))
+            reverse(
+                'posts:post_detail',
+                args=(post.pk,),
+            ),
         )
+        cache.clear()
         posts_on_pages = (
             response_profile.context.get('page_obj'),
             response_group_list.context.get('page_obj'),
@@ -249,7 +252,7 @@ class PaginatorTests(TestCase):
                 cache.clear()
                 response_first = self.anon.get(reverse(page, args=args))
                 response_second = self.anon.get(
-                    reverse(page, args=args) + '?page=2'
+                    reverse(page, args=args) + '?page=2',
                 )
                 cache.clear()
                 self.assertEqual(

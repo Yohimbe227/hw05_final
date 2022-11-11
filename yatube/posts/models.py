@@ -1,23 +1,22 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from core.models import CreatedModel
+from core.models import DefaultModel, TimestampedModel
 from core.utils import cut_text
 
 User = get_user_model()
 
 
-class Group(models.Model):
+class Group(DefaultModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField(verbose_name='группа')
 
     def __str__(self) -> str:
-        return cut_text(self.title, settings.LETTERS_IN_TITLE)
+        return cut_text(self.title)
 
 
-class Post(CreatedModel):
+class Post(DefaultModel):
     text = models.TextField(
         verbose_name='текст поста',
         help_text='Введите текст поста',
@@ -37,7 +36,7 @@ class Post(CreatedModel):
         verbose_name='автор',
         null=True,
     )
-    image = models.ImageField('Картинка', upload_to='posts/', blank=True)
+    image = models.ImageField('картинка', upload_to='posts/', blank=True)
 
     class Meta:
         ordering = ('-pub_date',)
@@ -45,10 +44,10 @@ class Post(CreatedModel):
         verbose_name = 'пост'
 
     def __str__(self) -> str:
-        return cut_text(self.text, settings.LETTERS_IN_TITLE)
+        return cut_text(self.text)
 
 
-class Comment(CreatedModel):
+class Comment(TimestampedModel):
     post = models.ForeignKey(
         Post,
         blank=True,
@@ -64,10 +63,9 @@ class Comment(CreatedModel):
         null=True,
     )
     text = models.TextField(
-        verbose_name='Текст комментария',
+        verbose_name='текст комментария',
         help_text='Введите текст комментария',
     )
-    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ('-created',)
@@ -75,11 +73,10 @@ class Comment(CreatedModel):
         verbose_name = 'comment'
 
     def __str__(self) -> str:
-        return f'Comment by {self.author} on {self.post}'
+        return f'Комментарий {self.author} на {self.post}'
 
 
-class Follow(CreatedModel):
-
+class Follow(DefaultModel):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -87,7 +84,6 @@ class Follow(CreatedModel):
         verbose_name='подписчик',
         null=True,
     )
-
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -97,4 +93,4 @@ class Follow(CreatedModel):
     )
 
     def __str__(self) -> str:
-        return f'follow by {self.user} on {self.author}'
+        return f'Подписался {self.user} на {self.author}'

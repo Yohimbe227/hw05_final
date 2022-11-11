@@ -7,9 +7,8 @@ from about.apps import AboutConfig
 from posts.apps import PostsConfig
 from users.apps import UsersConfig
 
-handler404 = 'core.views.page_not_found'
-handler500 = 'demo.views.error_500'
-handler403 = 'core.views.server_error'
+handler500 = 'core.views.server_failure'
+handler403 = 'core.views.csrf_failure'
 
 urlpatterns = [
     path('about/', include('about.urls', namespace=AboutConfig.name)),
@@ -18,6 +17,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('', include('posts.urls', namespace=PostsConfig.name)),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,

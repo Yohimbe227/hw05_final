@@ -8,7 +8,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('text', 'group', 'image')
         help_text = {
-            'text': 'Текст созданн поста',
+            'text': 'Текст созданного поста',
             'group': 'Группа, к которой будет относиться пост',
         }
 
