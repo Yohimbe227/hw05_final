@@ -1,13 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from core.models import DefaultModel, TimestampedModel
+from core.models import DefaultModel
 from core.utils import cut_text
 
 User = get_user_model()
 
 
-class Group(DefaultModel):
+class Group(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField(verbose_name='группа')
@@ -17,9 +17,11 @@ class Group(DefaultModel):
 
 
 class Post(DefaultModel):
-    text = models.TextField(
-        verbose_name='текст поста',
-        help_text='Введите текст поста',
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='автор',
+        null=True,
     )
     pub_date = models.DateTimeField(auto_now_add=True)
     group = models.ForeignKey(
@@ -29,12 +31,6 @@ class Post(DefaultModel):
         on_delete=models.SET_NULL,
         verbose_name='группа',
         help_text='Группа, к которой будет относиться пост',
-    )
-    author = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name='автор',
-        null=True,
     )
     image = models.ImageField('картинка', upload_to='posts/', blank=True)
 
@@ -47,7 +43,13 @@ class Post(DefaultModel):
         return cut_text(self.text)
 
 
-class Comment(TimestampedModel):
+class Comment(DefaultModel):
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='автор',
+        null=True,
+    )
     post = models.ForeignKey(
         Post,
         blank=True,
@@ -56,16 +58,7 @@ class Comment(TimestampedModel):
         verbose_name='пост',
         help_text='Ваш комментарий',
     )
-    author = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name='автор',
-        null=True,
-    )
-    text = models.TextField(
-        verbose_name='текст комментария',
-        help_text='Введите текст комментария',
-    )
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ('-created',)
@@ -76,7 +69,7 @@ class Comment(TimestampedModel):
         return f'Комментарий {self.author} на {self.post}'
 
 
-class Follow(DefaultModel):
+class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

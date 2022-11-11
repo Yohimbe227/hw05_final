@@ -1,12 +1,11 @@
-from behaviors.behaviors import Timestamped
 from django.db import models
 
 
 class DefaultModel(models.Model):
-    class Meta:
-        abstract = True
+    text = models.TextField(
+        verbose_name='текст комментария',
+        help_text='Введите текст комментария',
+    )
 
-
-class TimestampedModel(DefaultModel, Timestamped):
     class Meta:
         abstract = True
