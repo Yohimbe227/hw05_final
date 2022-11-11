@@ -7,8 +7,10 @@ from about.apps import AboutConfig
 from posts.apps import PostsConfig
 from users.apps import UsersConfig
 
-handler500 = 'core.views.server_failure'
 handler403 = 'core.views.csrf_failure'
+handler404 = 'core.views.page_not_found'
+handler500 = 'core.views.server_failure'
+
 
 urlpatterns = [
     path('about/', include('about.urls', namespace=AboutConfig.name)),

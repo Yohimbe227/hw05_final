@@ -6,14 +6,14 @@ from django.http import HttpRequest
 from django.shortcuts import render
 
 
-def page_not_found(request: HttpRequest, *args: Any) -> HTTPResponse:
+def page_not_found(request: HttpRequest, exception) -> HTTPResponse:
     return render(
         request,
         'core/404.html',
         {
             'path': request.path,
         },
-        HTTPStatus.NOT_FOUND,
+        status=HTTPStatus.NOT_FOUND,
     )
 
 
