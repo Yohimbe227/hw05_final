@@ -1,7 +1,6 @@
 from http import HTTPStatus
 from typing import Any
 
-from django.core.handlers import exception
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
