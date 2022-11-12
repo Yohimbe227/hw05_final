@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 
 from core.models import BaseModel, User
 from core.utils import cut_text
@@ -72,10 +73,7 @@ class Follow(models.Model):
     )
 
     class Meta:
-        unique_together = (
-            'user',
-            'author',
-        )
+        UniqueConstraint(fields=['user', 'author'], name='not_self_following')
 
     def __str__(self) -> str:
         return f'Подписался {self.user} на {self.author}'
