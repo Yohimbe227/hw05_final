@@ -9,7 +9,7 @@
     <article>
       {% include "posts/includes/post.html" %}
       {% if post.group %}
-        <a href="{% url "posts:group_list" post.group.slug %}">{{ post.group }}</a>
+        <a href="{% url 'posts:group_list' post.group.slug %}">{{ post.group }}</a>
       {% endif %}
     </article>
     {% if not forloop.last %}

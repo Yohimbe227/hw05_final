@@ -115,7 +115,7 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 OBJECTS_PER_PAGE = 10
 
-LETTERS_IN_TITLE = 15
+NUMBER_CUTED_LETTERS = 15
 
 CACHES = {
     'default': {

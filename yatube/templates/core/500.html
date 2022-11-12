@@ -2,7 +2,6 @@
 {% block title %}Custom 500{% endblock %}
 {% block content %}
   <h1>Custom 500</h1>
-  <p>Ошибка сервера. Кода 500</p>
-  <a href="{% url 'posts:index' %}">Идите на главную</a>
+  <p>Ошибка сервера. Код 500</p>
+  <a href="{% url "posts:index" %}">Идите на главную</a>
 {% endblock %}
-

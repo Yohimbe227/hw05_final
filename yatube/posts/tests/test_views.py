@@ -75,6 +75,7 @@ class PostPagesTests(TestCase):
     def tearDownClass(cls):
         super().tearDownClass()
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
+        cache.clear()
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
@@ -157,6 +158,7 @@ class PostPagesTests(TestCase):
         response_group_list = self.anon.get(
             reverse('posts:group_list', args=(post.group.slug,)),
         )
+        cache.clear()
         response_index = self.anon.get(reverse('posts:index'))
         response_detail = self.anon.get(
             reverse(
@@ -164,7 +166,6 @@ class PostPagesTests(TestCase):
                 args=(post.pk,),
             ),
         )
-        cache.clear()
         posts_on_pages = (
             response_profile.context.get('page_obj'),
             response_group_list.context.get('page_obj'),

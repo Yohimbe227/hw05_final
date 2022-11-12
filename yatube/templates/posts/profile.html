@@ -25,10 +25,10 @@
   {% for post in page_obj %}
     <article>
       {% include "posts/includes/post.html" %}
-      <a href="{% url "posts:post_detail" post.pk %}"> подробная информация </a>
+      <a href="{% url 'posts:post_detail' post.pk %}"> подробная информация </a>
     </article>
     {% if post.group is not None %}
-      <a href="{% url "posts:group_list" post.group.slug %}">все записи группы {{ post.group }}</a>
+      <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы {{ post.group }}</a>
     {% endif %}
     {% if not forloop.last %}
       <hr>

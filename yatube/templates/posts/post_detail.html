@@ -24,7 +24,7 @@
           Автор: {{ post.author.get_full_name }}
         </li>
         <li class="list-group-item">
-          <a href="{% url "posts:profile" post.author.username %}">
+          <a href="{% url 'posts:profile' post.author.username %}">
             Все посты пользователя
           </a>
         </li>
@@ -38,7 +38,7 @@
         {{ post.text }}
       </p>
       {% if request.user == post.author %}
-        <a class="btn btn-primary" href="{% url "posts:post_edit" post.pk %}">
+        <a class="btn btn-primary" href="{% url 'posts:post_edit' post.pk %}">
           редактировать запись
         </a>
       {% endif %}

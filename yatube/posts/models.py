@@ -1,28 +1,20 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 
-from core.models import DefaultModel
+from core.models import BaseModel, User
 from core.utils import cut_text
-
-User = get_user_model()
 
 
 class Group(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField(verbose_name='группа')
+    verbose_name = 'группа'
 
     def __str__(self) -> str:
         return cut_text(self.title)
 
 
-class Post(DefaultModel):
-    author = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name='автор',
-        null=True,
-    )
+class Post(BaseModel):
     pub_date = models.DateTimeField(auto_now_add=True)
     group = models.ForeignKey(
         Group,
@@ -43,13 +35,7 @@ class Post(DefaultModel):
         return cut_text(self.text)
 
 
-class Comment(DefaultModel):
-    author = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name='автор',
-        null=True,
-    )
+class Comment(BaseModel):
     post = models.ForeignKey(
         Post,
         blank=True,
@@ -84,6 +70,12 @@ class Follow(models.Model):
         verbose_name='автор',
         null=True,
     )
+
+    class Meta:
+        unique_together = (
+            'user',
+            'author',
+        )
 
     def __str__(self) -> str:
         return f'Подписался {self.user} на {self.author}'

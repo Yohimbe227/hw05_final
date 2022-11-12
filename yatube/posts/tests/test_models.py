@@ -1,10 +1,7 @@
-from django.contrib.auth import get_user_model
 from django.test import TestCase
 from mixer.backend.django import mixer
 
 from posts.models import Group, Post
-
-User = get_user_model()
 
 
 class GroupTest(TestCase):
@@ -22,8 +19,7 @@ class PostTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = mixer.blend(User)
-        cls.post = mixer.blend(Post, author=cls.user, text='Тестовый пост')
+        cls.post = mixer.blend(Post, text='Тестовый пост')
 
     def test_model_post_have_correct_object_names(self):
         """У Post корректно работает __str__."""
