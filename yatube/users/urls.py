@@ -1,23 +1,12 @@
 from django.contrib.auth import views as vw
-from django.urls import path
+from django.urls import path, include
 
 from users import views
 from users.apps import UsersConfig
 
 app_name = UsersConfig.name
 
-urlpatterns = [
-    path('signup/', views.SignUp.as_view(), name='signup'),
-    path(
-        'logout/',
-        vw.LogoutView.as_view(template_name='users/logged_out.html'),
-        name='logout',
-    ),
-    path(
-        'login/',
-        vw.LoginView.as_view(template_name='users/login.html'),
-        name='login',
-    ),
+passwords = [
     path(
         'password_change/done/',
         vw.PasswordChangeDoneView.as_view(
@@ -60,4 +49,19 @@ urlpatterns = [
         ),
         name='password_reset_complete',
     ),
+]
+
+urlpatterns = [
+    path('signup/', views.SignUp.as_view(), name='signup'),
+    path(
+        'logout/',
+        vw.LogoutView.as_view(template_name='users/logged_out.html'),
+        name='logout',
+    ),
+    path(
+        'login/',
+        vw.LoginView.as_view(template_name='users/login.html'),
+        name='login',
+    ),
+    path('passwords/', include(passwords))
 ]

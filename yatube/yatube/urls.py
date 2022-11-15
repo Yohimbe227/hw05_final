@@ -13,11 +13,11 @@ handler500 = 'core.views.server_failure'
 
 
 urlpatterns = [
+    path('', include('posts.urls', namespace=PostsConfig.name)),
     path('about/', include('about.urls', namespace=AboutConfig.name)),
+    path('admin/', admin.site.urls),
     path('auth/', include('users.urls', namespace=UsersConfig.name)),
     path('auth/', include('django.contrib.auth.urls')),
-    path('admin/', admin.site.urls),
-    path('', include('posts.urls', namespace=PostsConfig.name)),
 ]
 
 if settings.DEBUG:

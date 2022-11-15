@@ -21,7 +21,6 @@ def index(request: HttpRequest) -> HttpResponse:
                     'author',
                     'group',
                 ),
-                settings.OBJECTS_PER_PAGE,
             ),
         },
     )
@@ -37,7 +36,6 @@ def group_posts(request: HttpRequest, slug: str) -> HttpResponse:
             'page_obj': paginate(
                 request,
                 group.posts.select_related('group'),
-                settings.OBJECTS_PER_PAGE,
             ),
         },
     )
@@ -57,7 +55,6 @@ def profile(request: HttpRequest, username: str) -> HttpResponse:
             'page_obj': paginate(
                 request,
                 author.posts.select_related('author'),
-                settings.OBJECTS_PER_PAGE,
             ),
             'following': follows,
         },
@@ -115,12 +112,11 @@ def post_edit(request: HttpRequest, pk: int) -> HttpResponse:
 @login_required
 def add_comment(request: HttpRequest, pk: int) -> HttpResponse:
     post = get_object_or_404(Post, pk=pk)
-    form = CommentForm(data=request.POST or None)
+    form = CommentForm(request.POST or None)
     if form.is_valid():
-        comment = form.save(commit=False)
-        comment.author = request.user
-        comment.post = post
-        comment.save()
+        form.instance.author = request.user
+        form.instance.post = post
+        form.save()
     return redirect('posts:post_detail', pk=pk)
 
 
@@ -133,7 +129,6 @@ def follow_index(request: HttpRequest) -> HttpResponse:
             'page_obj': paginate(
                 request,
                 Post.objects.filter(author__following__user=request.user),
-                settings.OBJECTS_PER_PAGE,
             ),
         },
     )

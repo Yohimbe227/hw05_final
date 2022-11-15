@@ -1,6 +1,7 @@
+import os
 import shutil
-import tempfile
 
+from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase, override_settings
@@ -11,7 +12,8 @@ from posts.models import Comment, Group, Post
 from posts.tests import common
 
 User = get_user_model()
-TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
+
+TEMP_MEDIA_ROOT = os.path.join(settings.MEDIA_ROOT, 'temp')
 
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
@@ -19,8 +21,7 @@ class PostFormTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = mixer.blend(User)
-        cls.user_author = mixer.blend(User)
+        cls.user, cls.user_author = mixer.cycle(2).blend(User)
 
         cls.anon = Client()
         cls.auth = Client()
@@ -36,7 +37,7 @@ class PostFormTests(TestCase):
         super().tearDownClass()
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
 
-    def test_post_create_autorized_client_form(self):
+    def test_post_create_authorized_ok(self):
         """Posts.Forms. Создание нового Post."""
         self.auth.post(
             reverse('posts:post_create'),
@@ -47,8 +48,17 @@ class PostFormTests(TestCase):
             },
             follow=True,
         )
-        post = Post.objects.get(pk=1)
+        self.auth.post(
+            reverse('posts:post_create'),
+            {
+                'text': 'Тестовый пост',
+                'group': self.group.pk,
+                'image': common.image(),
+            },
+            follow=True,
+        )
         self.assertEqual(Post.objects.count(), 1)
+        post = Post.objects.get()
         self.assertEqual(post.author, self.user)
         self.assertEqual(post.group, self.group)
         self.assertEqual(post.text, 'Тестовый пост')
@@ -56,7 +66,7 @@ class PostFormTests(TestCase):
             post.image.name.endswith('giffy.png'),
         )
 
-    def test_post_create_unautorized_client_form(self):
+    def test_post_create_ok(self):
         """Posts.Forms. Создание нового Post гостем."""
         self.anon.post(
             reverse('posts:post_create'),
@@ -74,69 +84,87 @@ class PostFormTests(TestCase):
             author=self.user_author,
             group=self.group,
         )
-        context = self.author_client.post(
+        self.author_client.post(
             reverse('posts:post_edit', args=(self.post.pk,)),
             {
+                'group': mixer.blend(Group).pk,
                 'text': 'Изменение поста',
+                'image': common.image(),
             },
             follow=True,
-        ).context
+        )
         self.assertNotEqual(
-            context.get('post').text,
+            Post.objects.get(pk=1).group,
+            self.post.group,
+        )
+        self.assertNotEqual(
+            Post.objects.get(pk=1).text,
             self.post.text,
         )
         self.assertNotEqual(
-            context.get('group'),
-            self.post.group,
+            Post.objects.get(pk=1).image.name,
+            self.post.image.name,
         )
 
     def test_post_edit_form_auth(self):
-        """Posts.Forms. редактирование поста автором."""
+        """Posts.Forms. редактирование чужого поста."""
         self.post = mixer.blend(
             Post,
             author=self.user_author,
         )
-        context = self.auth.post(
+        self.auth.post(
             reverse('posts:post_edit', args=(self.post.pk,)),
             {
                 'text': 'Изменение поста',
+                'group': mixer.blend(Group).pk
             },
             follow=True,
-        ).context
-        self.assertEqual(
-            context.get('post'),
-            self.post,
         )
         self.assertEqual(
-            context.get('group'),
+            Post.objects.get(pk=1).text,
+            self.post.text,
+        )
+        self.assertEqual(
+            Post.objects.get(pk=1).group,
             self.post.group,
         )
 
     def test_comments_only_anon_users(self):
-        """Созданный коммент отображается на странице post_detail/."""
+        """Созданного коммента нет в базе."""
         post = mixer.blend(Post)
-        comment = mixer.blend(Comment, post=post)
-        context = self.anon.post(
-            reverse('posts:add_comment', args=(comment.post.pk,)),
+        self.anon.post(
+            reverse('posts:add_comment', args=(post.pk,)),
             {
                 'text': 'Комментарий',
             },
             follow=True,
-        ).context
-        self.assertIsNone(context.get('comment'))
+        )
+        self.assertFalse(Comment.objects.exists())
 
     def test_comments_only_autorized_users(self):
         """Созданный коммент отображается на странице post_detail/."""
         post = mixer.blend(Post)
         comment = mixer.blend(Comment, post=post)
-        context = self.auth.post(
+        self.auth.post(
             reverse('posts:add_comment', args=(comment.post.pk,)),
             {
                 'text': 'Комментарий',
             },
             follow=True,
-        ).context
+        )
         self.assertEqual(
-            context.get('post').comments,
+            Post.objects.get(pk=1).comments,
             post.comments,
         )
+
+    def test_post_create_page_show_correct_context(self):
+        """Форма в шаблоне post_create сформирована верно."""
+        response = self.auth.get(reverse('posts:post_create'))
+        form_fields = {
+            'text': forms.fields.CharField,
+            'group': forms.ModelChoiceField,
+        }
+        for value, expected in form_fields.items():
+            with self.subTest(value=value):
+                form_field = response.context.get('form').fields.get(value)
+                self.assertIsInstance(form_field, expected)

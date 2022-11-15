@@ -7,9 +7,11 @@ from core.utils import cut_text
 
 class Group(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, verbose_name='slug')
     description = models.TextField(verbose_name='группа')
-    verbose_name = 'группа'
+
+    class Meta:
+        verbose_name = 'группа'
 
     def __str__(self) -> str:
         return cut_text(self.title)
@@ -53,7 +55,7 @@ class Comment(BaseModel):
         verbose_name = 'comment'
 
     def __str__(self) -> str:
-        return f'Комментарий {self.author} на {self.post}'
+        return f'Комментарий {self.author} к {self.post}'
 
 
 class Follow(models.Model):
