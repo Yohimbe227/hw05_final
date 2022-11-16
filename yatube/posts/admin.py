@@ -22,7 +22,11 @@ class GroupAdmin(BaseAdmin):
 
 @admin.register(Comment)
 class Comment(BaseAdmin):
-    list_display = ('pk', 'text', 'created',)
+    list_display = (
+        'pk',
+        'text',
+        'created',
+    )
     list_editable = ('text',)
     search_fields = ('created',)
     list_filter = ('created',)
@@ -30,7 +34,14 @@ class Comment(BaseAdmin):
 
 @admin.register(Follow)
 class Comment(BaseAdmin):
-    list_display = ('pk', 'user', 'author',)
+    list_display = (
+        'pk',
+        'user',
+        'author',
+    )
     list_editable = ('user',)
-    search_fields = ('user', 'author',)
+    search_fields = (
+        'user',
+        'author',
+    )
     list_filter = ('user',)

@@ -37,7 +37,7 @@ class PostFormTests(TestCase):
         super().tearDownClass()
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
 
-    def test_post_create_authorized_ok(self):
+    def test_post_create_authorized_ok(self) -> None:
         """Posts.Forms. Создание нового Post."""
         self.auth.post(
             reverse('posts:post_create'),
@@ -66,7 +66,7 @@ class PostFormTests(TestCase):
             post.image.name.endswith('giffy.png'),
         )
 
-    def test_post_create_ok(self):
+    def test_post_create_ok(self) -> None:
         """Posts.Forms. Создание нового Post гостем."""
         self.anon.post(
             reverse('posts:post_create'),
@@ -77,7 +77,7 @@ class PostFormTests(TestCase):
         )
         self.assertEqual(Post.objects.count(), 0)
 
-    def test_post_edit_form_author(self):
+    def test_post_edit_form_author(self) -> None:
         """Posts.Forms. редактирование поста автором."""
         self.post = mixer.blend(
             Post,
@@ -106,7 +106,7 @@ class PostFormTests(TestCase):
             self.post.image.name,
         )
 
-    def test_post_edit_form_auth(self):
+    def test_post_edit_form_auth(self) -> None:
         """Posts.Forms. редактирование чужого поста."""
         self.post = mixer.blend(
             Post,
@@ -114,10 +114,7 @@ class PostFormTests(TestCase):
         )
         self.auth.post(
             reverse('posts:post_edit', args=(self.post.pk,)),
-            {
-                'text': 'Изменение поста',
-                'group': mixer.blend(Group).pk
-            },
+            {'text': 'Изменение поста', 'group': mixer.blend(Group).pk},
             follow=True,
         )
         self.assertEqual(
@@ -129,7 +126,7 @@ class PostFormTests(TestCase):
             self.post.group,
         )
 
-    def test_comments_only_anon_users(self):
+    def test_comments_only_anon_users(self) -> None:
         """Созданного коммента нет в базе."""
         post = mixer.blend(Post)
         self.anon.post(
@@ -141,7 +138,7 @@ class PostFormTests(TestCase):
         )
         self.assertFalse(Comment.objects.exists())
 
-    def test_comments_only_autorized_users(self):
+    def test_comments_only_autorized_users(self) -> None:
         """Созданный коммент отображается на странице post_detail/."""
         post = mixer.blend(Post)
         comment = mixer.blend(Comment, post=post)
@@ -157,7 +154,7 @@ class PostFormTests(TestCase):
             post.comments,
         )
 
-    def test_post_create_page_show_correct_context(self):
+    def test_post_create_page_show_correct_context(self) -> None:
         """Форма в шаблоне post_create сформирована верно."""
         response = self.auth.get(reverse('posts:post_create'))
         form_fields = {

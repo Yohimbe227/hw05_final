@@ -26,8 +26,9 @@ class PostTest(TestCase):
 
     def test_model_post_have_correct_object_names(self):
         """У Post корректно работает __str__."""
-        self.assertEqual(utils.cut_text(self.post.text),
-                         utils.cut_text(str(self.post)))
+        self.assertEqual(
+            utils.cut_text(self.post.text), utils.cut_text(str(self.post))
+        )
 
 
 class CommentTest(TestCase):
@@ -40,7 +41,8 @@ class CommentTest(TestCase):
         """У Comment корректно работает __str__."""
         self.assertEqual(
             f'Комментарий {self.comment.author} к {self.comment.post}',
-            str(self.comment))
+            str(self.comment),
+        )
 
 
 class FollowTest(TestCase):
@@ -53,4 +55,5 @@ class FollowTest(TestCase):
         """У Follow корректно работает __str__."""
         self.assertEqual(
             f'Подписался {self.follow.user} на {self.follow.author}',
-            str(self.follow))
+            str(self.follow),
+        )

@@ -36,7 +36,7 @@ class PostPagesTests(TestCase):
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
         cache.clear()
 
-    def test_home_page_show_correct_context(self):
+    def test_home_page_show_correct_context(self) -> None:
         """Шаблон index сформирован с правильным контекстом."""
         cache.clear()
         mixer.blend(Post)
@@ -44,7 +44,7 @@ class PostPagesTests(TestCase):
         cache.clear()
         self.assertIsInstance(response.context.get('page_obj')[0], Post)
 
-    def test_group_list_page_show_correct_context(self):
+    def test_group_list_page_show_correct_context(self) -> None:
         """Шаблон group_list сформирован с правильным контекстом."""
         post = mixer.blend(Post, group=self.group)
         response = self.anon.get(
@@ -55,7 +55,7 @@ class PostPagesTests(TestCase):
             post,
         )
 
-    def test_post_detail_page_show_correct_context(self):
+    def test_post_detail_page_show_correct_context(self) -> None:
         """Шаблон post_detail сформирован с правильным контекстом."""
         post = mixer.blend(Post, group=self.group)
         response = self.anon.get(
@@ -63,7 +63,7 @@ class PostPagesTests(TestCase):
         )
         self.assertEqual(response.context.get('post'), post)
 
-    def test_profile_page_show_correct_context(self):
+    def test_profile_page_show_correct_context(self) -> None:
         """Шаблон profile сформирован с правильным контекстом."""
         post = mixer.blend(Post, group=self.group)
         response = self.anon.get(
@@ -74,7 +74,7 @@ class PostPagesTests(TestCase):
             post,
         )
 
-    def test_actions_by_create_post(self):
+    def test_actions_by_create_post(self) -> None:
         """Созданный пост отображается на необходимых страницах."""
         post = mixer.blend(
             Post,
@@ -106,20 +106,21 @@ class PostPagesTests(TestCase):
                 self.assertEqual(obj[0], post)
                 self.assertEqual(obj[0].image, post.image)
 
-    def test_cache_index(self):
+    def test_cache_index(self) -> None:
         """Проверка хранения и очищения кэша для index."""
         posts = self.anon.get(reverse('posts:index')).content
-        mixer.blend(Post,
-                    text='test_new_post',
-                    author=self.user,
-                    )
+        mixer.blend(
+            Post,
+            text='test_new_post',
+            author=self.user,
+        )
         posts_old = self.anon.get(reverse('posts:index')).content
         self.assertEqual(posts_old, posts)
         cache.clear()
         posts_new = self.anon.get(reverse('posts:index')).content
         self.assertNotEqual(posts_old, posts_new)
 
-    def test_follows(self):
+    def test_follows(self) -> None:
         self.anon.post(
             reverse('posts:profile_follow', args=(self.user.username,)),
         )
@@ -139,13 +140,11 @@ class PostPagesTests(TestCase):
         )
         self.assertFalse(Follow.objects.exists())
 
-    def test_paginator(self):
+    def test_paginator(self) -> None:
         posts_per_page = settings.OBJECTS_PER_PAGE
 
         posts_on_second_page = (
-
             NUMBER_OF_OBJECT_PAGINATOR - settings.OBJECTS_PER_PAGE
-
         )
         posts = mixer.cycle(NUMBER_OF_OBJECT_PAGINATOR).blend(
             Post,
