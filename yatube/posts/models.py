@@ -75,7 +75,10 @@ class Follow(models.Model):
     )
 
     class Meta:
-        UniqueConstraint(fields=['user', 'author'], name='not_self_following')
+        constraints = UniqueConstraint(
+            fields=['user', 'author'],
+            name='not_self_following'
+        )
 
     def __str__(self) -> str:
         return f'Подписался {self.user} на {self.author}'
