@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Новый пост{% endblock %}
 {% block content %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
   {% load user_filters %}
-  <div class="row justify-content-center">
-    <div class="col-md-8 p-5">
+    <div class="col-md-12 p-5">
       <div class="card">
         <div class="card-header">
           Ваш пост
@@ -48,5 +49,4 @@
         </div>
       </div>
     </div>
-  </div>
 {% endblock %}
