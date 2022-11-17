@@ -8,7 +8,7 @@ from posts.forms import CommentForm, PostForm
 from posts.models import Follow, Group, Post, User
 
 
-@cache_page(20, key_prefix='index_page')
+# @cache_page(20, key_prefix='index_page')
 def index(request: HttpRequest) -> HttpResponse:
     return render(
         request,

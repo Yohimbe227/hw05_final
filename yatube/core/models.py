@@ -6,8 +6,8 @@ User = get_user_model()
 
 class BaseModel(models.Model):
     text = models.TextField(
-        verbose_name='текст комментария',
-        help_text='Введите текст комментария',
+        verbose_name='текст поста',
+        help_text='Введите текст поста',
     )
     author = models.ForeignKey(
         User,

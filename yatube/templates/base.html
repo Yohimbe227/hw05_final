@@ -1,36 +1,68 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    {% load static %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{% static "img/fav/favicon.ico" %}" type="image">
-    <link rel="apple-touch-icon" sizes="180x180"
-      href="{% static "img/fav/apple-touch-icon.png" %}">
-    <link rel="icon" type="image/png" sizes="32x32"
-      href="{% static "img/fav/favicon-32x32.png" %}">
-    <link rel="icon" type="image/png" sizes="16x16"
-      href="{% static "img/fav/favicon-16x16.png" %}">
-    <meta name="msapplication-TileColor" content="#000">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
-    <title>
-      {% block title %}
-      {% endblock %}
-    </title>
-  </head>
-  <body>
+<head>
+  {% load static %}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>
+    {% block title %}
+    {% endblock %}
+  </title>
+  <link href="{% static "css/templatemo_style.css" %}" rel="stylesheet"
+        type="text/css"/>
+  <script language="javascript" type="text/javascript">
+      function clearText(field) {
+          if (field.defaultValue == field.value) field.value = '';
+          else if (field.value == '') field.value = field.defaultValue;
+      }
+  </script>
+</head>
+<body>
+<div id="templatemo_body_wrapper">
+  <div id="templatemo_wrapper">
     <header>
       {% include "includes/header.html" %}
     </header>
-    <main>
-      <div class="container py-5">
-        {% block content %}
-        {% endblock %}
+    <div id="templatemo_menu">
+      {% with request.resolver_match.view_name as view_name %}
+        <ul>
+          <li><a href="{% url "about:author" %}"
+                 class="nav-link {% if view_name  == "about:author" %}current{% endif %}"><span></span>Об
+            авторе</a></li>
+          <li><a href="{% url "about:tech" %}"
+                 class="nav-link {% if view_name  == "about:tech" %}current{% endif %}"><span></span>Технологии</a>
+          </li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url "posts:post_create" %}"
+                   class="nav-link {% if view_name  == "posts:post_create" %}current{% endif %}"><span></span>Новая
+              запись</a>
+            </li>
+            <li><a href="{% url "users:password_change_form" %}"
+                   class="nav-link {% if view_name  == "users:password_change_form" %}current{% endif %}"><span></span>Изменить
+              пароль</a>
+            </li>
+          {% endif %}
+        </ul>
+      {% endwith %}
+      <div id="register_box">
+        {% if user.is_authenticated %}
+          Выйти <a href="{% url "users:logout" %}" class="signup">Тут</a>| <a
+          href="{% url "posts:profile" user.username %}" class="new_reg">Пользователь: {{ user.username }}</a>
+          |
+        {% else %}
+          Уже зарегистрированы? Жми! <a href="{% url "users:login" %}"
+                                        class="signup">Тут</a> | <a
+          href="{% url "users:signup" %}" class="new_reg">Регистрация</a>
+        {% endif %}
       </div>
-    </main>
-    <footer class="border-top text-center py-3">
-      {% include "includes/footer.html" %}
-    </footer>
-  </body>
+    </div>
+    <div id="templatemo_main">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+<footer class="border-top text-center py-3">
+  {% include "includes/footer.html" %}
+</footer>
+</body>
 </html>
