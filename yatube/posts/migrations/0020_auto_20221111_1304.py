@@ -6,35 +6,35 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0019_auto_20221110_1048'),
+        ("posts", "0019_auto_20221110_1048"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='comment',
-            name='modified',
+            model_name="comment",
+            name="modified",
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='text',
+            model_name="comment",
+            name="text",
             field=models.TextField(
-                help_text='Введите текст комментария',
-                verbose_name='текст комментария',
+                help_text="Введите текст комментария",
+                verbose_name="текст комментария",
             ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='image',
+            model_name="post",
+            name="image",
             field=models.ImageField(
-                blank=True, upload_to='posts/', verbose_name='картинка'
+                blank=True, upload_to="posts/", verbose_name="картинка"
             ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='text',
+            model_name="post",
+            name="text",
             field=models.TextField(
-                help_text='Введите текст комментария',
-                verbose_name='текст комментария',
+                help_text="Введите текст комментария",
+                verbose_name="текст комментария",
             ),
         ),
     ]

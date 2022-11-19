@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0008_auto_20221102_1453'),
+        ("posts", "0008_auto_20221102_1453"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='group',
-            name='id',
+            model_name="group",
+            name="id",
             field=models.AutoField(
                 auto_created=True,
                 primary_key=True,
                 serialize=False,
-                verbose_name='ID',
+                verbose_name="ID",
             ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='id',
+            model_name="post",
+            name="id",
             field=models.AutoField(
                 auto_created=True,
                 primary_key=True,
                 serialize=False,
-                verbose_name='ID',
+                verbose_name="ID",
             ),
         ),
     ]

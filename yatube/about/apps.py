@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class AboutConfig(AppConfig):
-    name = 'about'
-    verbose_name = 'о приложении'
+    name = "about"
+    verbose_name = "о приложении"

@@ -6,15 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0013_auto_20221103_1834'),
+        ("posts", "0013_auto_20221103_1834"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='post',
-            name='text',
+            model_name="post",
+            name="text",
             field=models.TextField(
-                help_text='Введите текст поста', verbose_name='текст поста'
+                help_text="Введите текст поста", verbose_name="текст поста"
             ),
         ),
     ]

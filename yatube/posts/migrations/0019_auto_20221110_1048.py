@@ -6,21 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0018_auto_20221109_1230'),
+        ("posts", "0018_auto_20221109_1230"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='follow',
-            name='created',
+            model_name="follow",
+            name="created",
         ),
         migrations.RemoveField(
-            model_name='post',
-            name='created',
+            model_name="post",
+            name="created",
         ),
         migrations.AddField(
-            model_name='comment',
-            name='modified',
+            model_name="comment",
+            name="modified",
             field=models.DateTimeField(blank=True, db_index=True, null=True),
         ),
     ]

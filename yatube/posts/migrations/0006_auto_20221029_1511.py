@@ -9,51 +9,51 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('posts', '0005_alter_group_slug'),
+        ("posts", "0005_alter_group_slug"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='post',
+            name="post",
             options={
-                'default_related_name': 'posts',
-                'ordering': ('-pub_date',),
+                "default_related_name": "posts",
+                "ordering": ("-pub_date",),
             },
         ),
         migrations.AlterField(
-            model_name='group',
-            name='description',
-            field=models.TextField(verbose_name='Группа'),
+            model_name="group",
+            name="description",
+            field=models.TextField(verbose_name="Группа"),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='author',
+            model_name="post",
+            name="author",
             field=models.ForeignKey(
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='posts',
+                related_name="posts",
                 to=settings.AUTH_USER_MODEL,
-                verbose_name='Автор',
+                verbose_name="Автор",
             ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='group',
+            model_name="post",
+            name="group",
             field=models.ForeignKey(
                 blank=True,
-                help_text='Группа, к которой будет относиться пост',
+                help_text="Группа, к которой будет относиться пост",
                 null=True,
                 on_delete=django.db.models.deletion.SET_NULL,
-                related_name='posts',
-                to='posts.group',
-                verbose_name='Группа',
+                related_name="posts",
+                to="posts.group",
+                verbose_name="Группа",
             ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='text',
+            model_name="post",
+            name="text",
             field=models.TextField(
-                help_text='Введите текст поста', verbose_name='Текст поста'
+                help_text="Введите текст поста", verbose_name="Текст поста"
             ),
         ),
     ]

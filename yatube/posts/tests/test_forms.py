@@ -13,7 +13,7 @@ from posts.tests import common
 
 User = get_user_model()
 
-TEMP_MEDIA_ROOT = os.path.join(settings.MEDIA_ROOT, 'temp')
+TEMP_MEDIA_ROOT = os.path.join(settings.MEDIA_ROOT, "temp")
 
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
@@ -40,20 +40,20 @@ class PostFormTests(TestCase):
     def test_post_create_authorized_ok(self) -> None:
         """Posts.Forms. Создание нового Post."""
         self.auth.post(
-            reverse('posts:post_create'),
+            reverse("posts:post_create"),
             {
-                'text': 'Тестовый пост',
-                'group': self.group.pk,
-                'image': common.image(),
+                "text": "Тестовый пост",
+                "group": self.group.pk,
+                "image": common.image(),
             },
             follow=True,
         )
         self.auth.post(
-            reverse('posts:post_create'),
+            reverse("posts:post_create"),
             {
-                'text': 'Тестовый пост',
-                'group': self.group.pk,
-                'image': common.image(),
+                "text": "Тестовый пост",
+                "group": self.group.pk,
+                "image": common.image(),
             },
             follow=True,
         )
@@ -61,17 +61,17 @@ class PostFormTests(TestCase):
         post = Post.objects.get()
         self.assertEqual(post.author, self.user)
         self.assertEqual(post.group, self.group)
-        self.assertEqual(post.text, 'Тестовый пост')
+        self.assertEqual(post.text, "Тестовый пост")
         self.assertTrue(
-            post.image.name.endswith('giffy.png'),
+            post.image.name.endswith("giffy.png"),
         )
 
     def test_post_create_ok(self) -> None:
         """Posts.Forms. Создание нового Post гостем."""
         self.anon.post(
-            reverse('posts:post_create'),
+            reverse("posts:post_create"),
             {
-                'text': 'Тестовый пост',
+                "text": "Тестовый пост",
             },
             follow=True,
         )
@@ -85,11 +85,11 @@ class PostFormTests(TestCase):
             group=self.group,
         )
         self.author_client.post(
-            reverse('posts:post_edit', args=(self.post.pk,)),
+            reverse("posts:post_edit", args=(self.post.pk,)),
             {
-                'group': mixer.blend(Group).pk,
-                'text': 'Изменение поста',
-                'image': common.image(),
+                "group": mixer.blend(Group).pk,
+                "text": "Изменение поста",
+                "image": common.image(),
             },
             follow=True,
         )
@@ -113,8 +113,8 @@ class PostFormTests(TestCase):
             author=self.user_author,
         )
         self.auth.post(
-            reverse('posts:post_edit', args=(self.post.pk,)),
-            {'text': 'Изменение поста', 'group': mixer.blend(Group).pk},
+            reverse("posts:post_edit", args=(self.post.pk,)),
+            {"text": "Изменение поста", "group": mixer.blend(Group).pk},
             follow=True,
         )
         self.assertEqual(
@@ -130,9 +130,9 @@ class PostFormTests(TestCase):
         """Созданного коммента нет в базе."""
         post = mixer.blend(Post)
         self.anon.post(
-            reverse('posts:add_comment', args=(post.pk,)),
+            reverse("posts:add_comment", args=(post.pk,)),
             {
-                'text': 'Комментарий',
+                "text": "Комментарий",
             },
             follow=True,
         )
@@ -143,9 +143,9 @@ class PostFormTests(TestCase):
         post = mixer.blend(Post)
         comment = mixer.blend(Comment, post=post)
         self.auth.post(
-            reverse('posts:add_comment', args=(comment.post.pk,)),
+            reverse("posts:add_comment", args=(comment.post.pk,)),
             {
-                'text': 'Комментарий',
+                "text": "Комментарий",
             },
             follow=True,
         )
@@ -156,12 +156,12 @@ class PostFormTests(TestCase):
 
     def test_post_create_page_show_correct_context(self) -> None:
         """Форма в шаблоне post_create сформирована верно."""
-        response = self.auth.get(reverse('posts:post_create'))
+        response = self.auth.get(reverse("posts:post_create"))
         form_fields = {
-            'text': forms.fields.CharField,
-            'group': forms.ModelChoiceField,
+            "text": forms.fields.CharField,
+            "group": forms.ModelChoiceField,
         }
         for value, expected in form_fields.items():
             with self.subTest(value=value):
-                form_field = response.context.get('form').fields.get(value)
+                form_field = response.context.get("form").fields.get(value)
                 self.assertIsInstance(form_field, expected)

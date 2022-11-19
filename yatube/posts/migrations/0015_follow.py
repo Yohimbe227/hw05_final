@@ -9,46 +9,46 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('posts', '0014_auto_20221105_1741'),
+        ("posts", "0014_auto_20221105_1741"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Follow',
+            name="Follow",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
-                ('created', models.DateTimeField(auto_now_add=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
                 (
-                    'author',
+                    "author",
                     models.ForeignKey(
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='following',
+                        related_name="following",
                         to=settings.AUTH_USER_MODEL,
-                        verbose_name='автор',
+                        verbose_name="автор",
                     ),
                 ),
                 (
-                    'user',
+                    "user",
                     models.ForeignKey(
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='follower',
+                        related_name="follower",
                         to=settings.AUTH_USER_MODEL,
-                        verbose_name='подписчик',
+                        verbose_name="подписчик",
                     ),
                 ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

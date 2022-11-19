@@ -9,49 +9,49 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('posts', '0007_auto_20221029_1517'),
+        ("posts", "0007_auto_20221029_1517"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='post',
+            name="post",
             options={
-                'default_related_name': 'posts',
-                'ordering': ('-pub_date',),
-                'verbose_name': 'пост',
+                "default_related_name": "posts",
+                "ordering": ("-pub_date",),
+                "verbose_name": "пост",
             },
         ),
         migrations.RemoveField(
-            model_name='post',
-            name='image',
+            model_name="post",
+            name="image",
         ),
         migrations.AlterField(
-            model_name='group',
-            name='description',
-            field=models.TextField(verbose_name='группа'),
+            model_name="group",
+            name="description",
+            field=models.TextField(verbose_name="группа"),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='author',
+            model_name="post",
+            name="author",
             field=models.ForeignKey(
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='posts',
+                related_name="posts",
                 to=settings.AUTH_USER_MODEL,
-                verbose_name='автор',
+                verbose_name="автор",
             ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='group',
+            model_name="post",
+            name="group",
             field=models.ForeignKey(
                 blank=True,
-                help_text='Группа, к которой будет относиться пост',
+                help_text="Группа, к которой будет относиться пост",
                 null=True,
                 on_delete=django.db.models.deletion.SET_NULL,
-                related_name='posts',
-                to='posts.group',
-                verbose_name='группа',
+                related_name="posts",
+                to="posts.group",
+                verbose_name="группа",
             ),
         ),
     ]

@@ -7,21 +7,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0015_follow'),
+        ("posts", "0015_follow"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='post',
+            name="post",
             options={
-                'default_related_name': 'posts',
-                'ordering': ('-pub_date',),
-                'verbose_name': 'пост',
+                "default_related_name": "posts",
+                "ordering": ("-pub_date",),
+                "verbose_name": "пост",
             },
         ),
         migrations.AddField(
-            model_name='post',
-            name='pub_date',
+            model_name="post",
+            name="pub_date",
             field=models.DateTimeField(
                 auto_now_add=True, default=django.utils.timezone.now
             ),

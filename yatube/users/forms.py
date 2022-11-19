@@ -7,5 +7,5 @@ User = get_user_model()
 class CreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email')
-        labels = {'username': 'имя юзера'}
+        fields = ("first_name", "last_name", "username", "email")
+        labels = {"username": "имя юзера"}

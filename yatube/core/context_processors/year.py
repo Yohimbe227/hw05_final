@@ -6,5 +6,5 @@ from django.http import HttpRequest
 
 def year(request: HttpRequest) -> Dict[str, int]:
     return {
-        'year': date.today().year,
+        "year": date.today().year,
     }

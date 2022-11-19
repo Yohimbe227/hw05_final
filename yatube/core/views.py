@@ -9,9 +9,9 @@ def page_not_found(request: HttpRequest, exception) -> HttpResponse:
     del exception
     return render(
         request,
-        'core/404.html',
+        "core/404.html",
         {
-            'path': request.path,
+            "path": request.path,
         },
         status=HTTPStatus.NOT_FOUND,
     )
@@ -20,7 +20,7 @@ def page_not_found(request: HttpRequest, exception) -> HttpResponse:
 def csrf_failure(request: HttpRequest, *args: Any) -> HttpResponse:
     return render(
         request,
-        'core/403csrf.html',
+        "core/403csrf.html",
         status=HTTPStatus.FORBIDDEN,
     )
 
@@ -28,6 +28,6 @@ def csrf_failure(request: HttpRequest, *args: Any) -> HttpResponse:
 def server_failure(request: HttpRequest) -> HttpResponse:
     return render(
         request,
-        'core/500.html',
+        "core/500.html",
         status=HTTPStatus.INTERNAL_SERVER_ERROR,
     )

@@ -7,44 +7,44 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0002_auto_20220922_1622'),
+        ("posts", "0002_auto_20220922_1622"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='group',
-            name='id',
+            model_name="group",
+            name="id",
             field=models.AutoField(
                 auto_created=True,
                 primary_key=True,
                 serialize=False,
-                verbose_name='ID',
+                verbose_name="ID",
             ),
         ),
         migrations.AlterField(
-            model_name='group',
-            name='slug',
+            model_name="group",
+            name="slug",
             field=models.SlugField(),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='group',
+            model_name="post",
+            name="group",
             field=models.ForeignKey(
                 blank=True,
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='posts',
-                to='posts.Group',
+                related_name="posts",
+                to="posts.Group",
             ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='id',
+            model_name="post",
+            name="id",
             field=models.AutoField(
                 auto_created=True,
                 primary_key=True,
                 serialize=False,
-                verbose_name='ID',
+                verbose_name="ID",
             ),
         ),
     ]

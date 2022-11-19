@@ -11,7 +11,7 @@ class GroupTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.group = mixer.blend(Group, title='Тестовая группа')
+        cls.group = mixer.blend(Group, title="Тестовая группа")
 
     def test_model_post_have_correct_object_names(self):
         """У Group корректно работает __str__."""
@@ -26,9 +26,7 @@ class PostTest(TestCase):
 
     def test_model_post_have_correct_object_names(self):
         """У Post корректно работает __str__."""
-        self.assertEqual(
-            utils.cut_text(self.post.text), utils.cut_text(str(self.post))
-        )
+        self.assertEqual(utils.cut_text(self.post.text), utils.cut_text(str(self.post)))
 
 
 class CommentTest(TestCase):
@@ -40,7 +38,7 @@ class CommentTest(TestCase):
     def test_model_post_have_correct_object_names(self):
         """У Comment корректно работает __str__."""
         self.assertEqual(
-            f'Комментарий {self.comment.author} к {self.comment.post}',
+            f"Комментарий {self.comment.author} к {self.comment.post}",
             str(self.comment),
         )
 
@@ -54,6 +52,6 @@ class FollowTest(TestCase):
     def test_model_post_have_correct_object_names(self):
         """У Follow корректно работает __str__."""
         self.assertEqual(
-            f'Подписался {self.follow.user} на {self.follow.author}',
+            f"Подписался {self.follow.user} на {self.follow.author}",
             str(self.follow),
         )

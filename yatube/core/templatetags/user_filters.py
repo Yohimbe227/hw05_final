@@ -9,6 +9,6 @@ register = template.Library()
 def addclass(field: PostForm.base_fields, css: str) -> str:
     return field.as_widget(
         attrs={
-            'class': css,
+            "class": css,
         },
     )
