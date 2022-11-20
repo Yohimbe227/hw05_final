@@ -73,7 +73,8 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 }
 
 #templatemo_wrapper {
-	width: 1000px;
+	width: 100%;
+	max-width: 1000px;
 	padding: 0 10px;
 	margin: 0 auto;
 }
@@ -137,14 +138,16 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 
 #templatemo_menu {
 	clear: both;
-	width: 1000px;
+	width: 100%;
 	height: 35px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 #templatemo_menu ul {
 	float: left;
 	display: block;
-	width: 700px;
 	height: 35px;
 	margin: 0;
 	padding: 0;
@@ -161,7 +164,6 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 	position: relative;
 	float: left;
 	display: block;
-	height: 21px;
 	padding: 7px 28px;
 	font-size: 15px;
 	color: #fff;	
@@ -187,7 +189,6 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 
 #register_box {
 	float: right;
-	width: 250px;
 	color: #fff;
 	font-size: 11px;
 	padding-top: 10px;
@@ -200,7 +201,6 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 /* content */
 
 #templatemo_main {
-	width: 920px;
 	padding: 40px;
 	background: #fff;
 }
@@ -372,10 +372,16 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 	color: #fff; 
 	text-decoration: none;
 }
+
+.footer {
+	max-width: 1000px;
+	width: 100%;
+	margin: 0 auto;
+	pading: 0 10px;
+}
 /* end of footer */
 
 #templatemo_copyright {
-	width: 920px;
 	padding: 15px 40px;
 	margin: 0 auto;
 	color: #333;
