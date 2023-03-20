@@ -9,8 +9,6 @@ SECRET_KEY = (
 
 DEBUG = True
 
-# CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
-
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
