@@ -143,7 +143,9 @@ class PostPagesTests(TestCase):
     def test_paginator(self) -> None:
         posts_per_page = settings.OBJECTS_PER_PAGE
 
-        posts_on_second_page = NUMBER_OF_OBJECT_PAGINATOR - settings.OBJECTS_PER_PAGE
+        posts_on_second_page = (
+            NUMBER_OF_OBJECT_PAGINATOR - settings.OBJECTS_PER_PAGE
+        )
         posts = mixer.cycle(NUMBER_OF_OBJECT_PAGINATOR).blend(
             Post,
             author=self.user,

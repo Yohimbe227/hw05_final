@@ -38,8 +38,12 @@ class PostURLTests(TestCase):
             "post-edit": reverse("posts:post_edit", args=(cls.post.pk,)),
             "follow-index": reverse("posts:follow_index"),
             "comment": reverse("posts:add_comment", args=(cls.post.pk,)),
-            "follow": reverse("posts:profile_follow", args=(cls.user.username,)),
-            "unfollow": reverse("posts:profile_unfollow", args=(cls.user.username,)),
+            "follow": reverse(
+                "posts:profile_follow", args=(cls.user.username,)
+            ),
+            "unfollow": reverse(
+                "posts:profile_unfollow", args=(cls.user.username,)
+            ),
             "missing": "core.views.page_not_found",
         }
 
@@ -72,7 +76,11 @@ class PostURLTests(TestCase):
             (self.urls.get("follow-index"), "posts/follow.html", self.auth),
             (self.urls.get("index"), "posts/index.html", self.anon),
             (self.urls.get("missing"), "core/404.html", self.anon),
-            (self.urls.get("post-edit"), "posts/create_post.html", self.author_client),
+            (
+                self.urls.get("post-edit"),
+                "posts/create_post.html",
+                self.author_client,
+            ),
             (self.urls.get("profile"), "posts/profile.html", self.anon),
         )
         for url, template, client in templates:

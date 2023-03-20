@@ -26,7 +26,9 @@ class PostTest(TestCase):
 
     def test_model_post_have_correct_object_names(self):
         """У Post корректно работает __str__."""
-        self.assertEqual(utils.cut_text(self.post.text), utils.cut_text(str(self.post)))
+        self.assertEqual(
+            utils.cut_text(self.post.text), utils.cut_text(str(self.post))
+        )
 
 
 class CommentTest(TestCase):

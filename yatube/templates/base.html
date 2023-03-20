@@ -24,51 +24,13 @@
   </script>
 </head>
 <body>
-<div id="templatemo_body_wrapper">
-  <div id="templatemo_wrapper">
-    <header>
-      {% include "includes/header.html" %}
-    </header>
-    <div id="templatemo_menu">
-      {% with request.resolver_match.view_name as view_name %}
-        <ul>
-          <li><a href="{% url "about:author" %}"
-                 class="nav-link {% if view_name  == "about:author" %}current{% endif %}"><span></span>Об
-            авторе</a></li>
-          <li><a href="{% url "about:tech" %}"
-                 class="nav-link {% if view_name  == "about:tech" %}current{% endif %}"><span></span>Технологии</a>
-          </li>
-          {% if user.is_authenticated %}
-            <li><a href="{% url "posts:post_create" %}"
-                   class="nav-link {% if view_name  == "posts:post_create" %}current{% endif %}"><span></span>Новая
-              запись</a>
-            </li>
-            <li><a href="{% url "users:password_change_form" %}"
-                   class="nav-link {% if view_name  == "users:password_change_form" %}current{% endif %}"><span></span>Изменить
-              пароль</a>
-            </li>
-          {% endif %}
-        </ul>
-      {% endwith %}
-      <div id="register_box">
-        {% if user.is_authenticated %}
-          Выйти <a href="{% url "users:logout" %}" class="signup">Тут</a>| <a
-          href="{% url "posts:profile" user.username %}" class="new_reg">Пользователь: {{ user.username }}</a>
-          |
-        {% else %}
-          Уже зарегистрированы? Жми! <a href="{% url "users:login" %}"
-                                        class="signup">Тут</a> | <a
-          href="{% url "users:signup" %}" class="new_reg">Регистрация</a>
-        {% endif %}
-      </div>
-    </div>
-    <div id="templatemo_main">
+  {% include "includes/menu.html" %}
       {% block content %}
       {% endblock %}
     </div>
   </div>
 </div>
-<footer class="border-top text-center py-3">
+<footer class="border-top text-center py-3 footer">
   {% include "includes/footer.html" %}
 </footer>
 </body>

@@ -19,5 +19,7 @@ def cut_text(
     text: str, number_cuted_letters: int = settings.NUMBER_CUTED_LETTERS
 ) -> str:
     return (
-        text[:number_cuted_letters] + "…" if len(text) > number_cuted_letters else text
+        text[:number_cuted_letters] + "…"
+        if len(text) > number_cuted_letters
+        else text
     )
