@@ -1,14 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.decorators.cache import cache_page
+
 
 from core.utils import paginate
 from posts.forms import CommentForm, PostForm
 from posts.models import Follow, Group, Post, User
 
 
-@cache_page(20, key_prefix='index_page')
 def index(request: HttpRequest) -> HttpResponse:
     return render(
         request,

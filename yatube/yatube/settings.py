@@ -123,8 +123,8 @@ OBJECTS_PER_PAGE = 10
 
 NUMBER_CUTED_LETTERS = 15
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    },
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#     },
+# }
