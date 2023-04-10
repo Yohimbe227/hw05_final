@@ -1,7 +1,14 @@
+# Проект hw05_final
+_**Основной стэк**_:  
+![Python](https://img.shields.io/badge/python-3.7-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Django](https://img.shields.io/badge/django-2.19-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
+![SQLite3](https://img.shields.io/badge/SQLite-3-%23316192.svg?style=for-the-badge&logo=SQLite3&logoColor=white) 
 
-# Учебный проект hw05_final
-Стандартный блог.
-## Содержание и возможности:
+**Проект был выполнен в учебных целях, чтобы получить навыки работы с
+библиотекой Django.**
+
+## Содержание и возможности/Content and Features:
+
 * Создание постов с картинками. 
 * Комментирование постов.
 * Подписки на авторов.
@@ -41,6 +48,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## License
+## Лицензия/License
 
 Студентам Яндекс Практикума копировать запрещено совсем и категорически! А учиться кто будет? ;)
